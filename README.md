@@ -30,6 +30,7 @@ cam.End3D2D()
 ```
 
 ### Clipping 3D Bounding Boxes
+
 ```lua
 local mins, maxs = ent:OBBMins(), ent:OBBMaxs()
 -- or
@@ -41,3 +42,8 @@ my_addon.clip:Scissor3D(pos, ang, mins, maxs)
     cam.End3D2D()
 my_addon.clip()
 ```
+
+<p align="center">
+    <i>In most cases, this is <b>not recommended</b> because stencils are fundamentally 2D, leading to depth issues like this:</i><br/><br/>
+    <img alt="Depth Problems Example" src="https://i.imgur.com/e0U8Kow.gif/">
+</p>

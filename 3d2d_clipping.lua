@@ -35,12 +35,13 @@ AddCSLuaFile()
 if SERVER then return end
 
 local render = render
-local draw = draw
 local Vector = Vector
 local STENCIL_ALWAYS = STENCIL_ALWAYS
 local STENCIL_KEEP = STENCIL_KEEP
 local STENCIL_REPLACE = STENCIL_REPLACE
 local STENCIL_EQUAL = STENCIL_EQUAL
+local MATERIAL_CULLMODE_CW = MATERIAL_CULLMODE_CW
+local MATERIAL_CULLMODE_CCW = MATERIAL_CULLMODE_CCW
 
 local transparent = Color(0, 0, 0, 0)
 local clipping = false
@@ -97,8 +98,10 @@ do
 
 		stencil()
 
-			draw.NoTexture()
-			render.DrawQuad(vert1, vert2, vert3, vert4, transparent)
+			render.CullMode(MATERIAL_CULLMODE_CW)
+				render.SetColorMaterial()
+				render.DrawQuad(vert1, vert2, vert3, vert4, transparent)
+			render.CullMode(MATERIAL_CULLMODE_CCW)
 
 		stencil()
 
@@ -112,7 +115,7 @@ do
 
 		stencil()
 
-			draw.NoTexture()
+			render.SetColorMaterial()
 			render.DrawBox(pos, ang, mins, maxs, transparent, true)
 
 		stencil()
